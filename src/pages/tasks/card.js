@@ -4,6 +4,11 @@ import api from '../../services/api';
 import Modal from '../../components/forms/modal'
 import FormTask from './form';
 
+// const Controller = require ('./controller');
+
+import TaskController from './controller';
+import {editTask, finishTask} from './controller';
+
 export default function Card (props){
 
   const initialTask  ={
@@ -58,42 +63,42 @@ export default function Card (props){
         taskPeriodicityId: task.taskPeriodicity,
     };    
 
-    if(!task.taskId){    
+    // if(!task.taskId){    
 
-        await api.post(`/task`, { task : saveTaskTemp })
-        .then(res => {
-            console.log(res.data);
-        }).catch(err => {
-            console.log(err.response);
-        });     
+    //     await api.post(`/task`, { task : saveTaskTemp })
+    //     .then(res => {
+    //         console.log(res.data);
+    //     }).catch(err => {
+    //         console.log(err.response);
+    //     });     
 
-    }else{
+    // }else{
 
-        await api.put(`/task`, { task : saveTaskTemp })
-        .then(res => {
-            console.log(res.data);
-        }).catch(err => {
-            console.log(err.response);
-        });     
+    //     await api.put(`/task`, { task : saveTaskTemp })
+    //     .then(res => {
+    //         console.log(res.data);
+    //     }).catch(err => {
+    //         console.log(err.response);
+    //     });     
         
-    }
+    // }
     
     clearTasksComponents();
     
   }
 
-  const finishTask = async taskTemp => {
+  // const finishTask = async taskTemp => {
 
-    await api.put(`/finishTask`, { task : taskTemp })
-    .then(res => {
-        console.log(res.data);
-    }).catch(err => {
-        console.log(err.response);
-    });     
+  //   await api.put(`/finishTask`, { task : taskTemp })
+  //   .then(res => {
+  //       console.log(res.data);
+  //   }).catch(err => {
+  //       console.log(err.response);
+  //   });     
    
-    loadTasks(status);
+  //   loadTasks(status);
     
-  }
+  // }
 
   const clearTasksComponents = () =>{
       setTask(initialTask);
@@ -229,12 +234,13 @@ export default function Card (props){
                 </div>
                 <div className="list-group-item-figure no-border-top">
                  
-                  <button onClick={() => {finishTask(task)}}  
+                  <button onClick={() =>finishTask(task, loadTasks, status )}  
                           className="btn btn-sm btn-icon btn-light" data-todoid="1">
                     <i className="fa fa-check"></i>
                   </button> 
                                     
-                  <button type="button" className="btn btn-sm btn-icon btn-light" data-todoid="1">
+                  <button type="button" onClick={() =>editTask(task, showModal, setTask)}  
+                          className="btn btn-sm btn-icon btn-light" data-todoid="1">
                     <i className="fa fa-pencil-alt"></i>
                   </button>
                   

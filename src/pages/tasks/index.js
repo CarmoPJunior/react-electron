@@ -90,10 +90,10 @@ export default function Task (){
         showModal();
     }
 
-	const editTask = taskTemp => {
+	const editTask = (taskTemp) => {
 
        const editTask  ={
-            taskId: taskTemp.id,
+            taskId: 'taskTemp.id',
             taskName: taskTemp.name,
             taskDescription: taskTemp.description,
             taskObservation: taskTemp.observation,
@@ -104,9 +104,11 @@ export default function Task (){
             taskType: taskTemp.taskTypeId,
             taskPeriodicity: taskTemp.taskPeriodicityId,
         };    
-
+        console.log(editTask);
         setTask(editTask);
-        showModal();
+        
+        console.log(task);
+        showModal(editTask);
     }    
     
     async function  loadProducts(page) {
@@ -129,9 +131,11 @@ export default function Task (){
         loadProducts(currentPage + 1);        
     }
 
-    const showModal = () => {
+    const showModal = (editTask) => {
         console.log('teste modal');
+        setTask(editTask);
         setIsShowModal(true);
+        console.log(editTask);
     }
       
     const hideModal = (e) => {
