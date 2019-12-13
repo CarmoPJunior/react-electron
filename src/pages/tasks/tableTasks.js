@@ -6,6 +6,7 @@ export default function TableTasks (props){
 //const TableTasks = props => 
 
     const lastPage = Math.ceil(props.totalRecords / props.pageSize);
+    const { data, setSelected, setModalState } = props;
 
 
     return (
@@ -61,7 +62,8 @@ export default function TableTasks (props){
                                     <td>{task.taskStatusId}</td>
                                     <td>{task.taskTypeId}</td>
                                     <td>
-                                        <button     onClick={() => {props.editTask(task)}}
+                                        <button     onClick={() => { props.setTask(task)
+                                                                    props.editTask(task, props.setSelected)}}
                                                     className="btn btn-sm btn-icon btn-secondary">
                                             <i className="fa fa-pencil-alt"></i> 
                                             <span className="sr-only">Edit</span>

@@ -1,118 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import {getFullDateHour} from '../../utils/dateUtil';
-import api from '../../services/api';
 import Modal from '../../components/forms/modal'
 import FormTask from './form';
-
-// const Controller = require ('./controller');
-
-import TaskController from './controller';
-import {editTask, finishTask} from './controller';
+import {editTask, finishTask, useModalWithData, loadTasks, saveTask } from './controller';
 
 export default function Card (props){
-
-  const initialTask  ={
-    taskId: '',
-    taskName: '',
-    taskDescription: '',
-    taskObservation: '',
-    taskDateHour: '',
-    taskDuration: '',
-    taskCompletionDate: '',       
-    taskStatus: 1,
-    taskType: '',
-    taskPeriodicity: '',
-};
   
-  const [ status, setStatus ] = useState([1]); 
-  const [ tasks, setTasks ] = useState([]);
-  const [ task, setTask ] = useState(initialTask);
-  const [ isShowModal, setIsShowModal ] = useState(false); 
+  const {task, setTask, tasks, setTasks, status, setStatus, isShowModal, setIsShowModal} = useModalWithData();
 
   useEffect(() => {                            
-      loadTasks(status);
+      loadTasks(status, setStatus, setTasks);
+      console.log(status);
+      console.log(task);
   }, [] );
-    
-  async function loadTasks(statusTemp) {
-
-    if(!statusTemp)
-      statusTemp = [1,2,3,4,7];
-    
-    setStatus(statusTemp);
-
-    const response = await api.get(`/taskByStatus?status=` + statusTemp);
-    const {tasks, totalRecords} = response.data;    
-    setTasks(tasks);       
-
-  }    
-
-  const saveTask = async e => {
-
-    e.preventDefault();  
-
-    let saveTaskTemp  ={
-        id: task.taskId,
-        name: task.taskName,
-        description: task.taskDescription,
-        observation: task.taskObservation,
-        dateHour: new Date(),
-        duration: task.taskDuration,
-        completionDate: task.taskCompletionDate,            
-        taskStatusId: task.taskStatus,
-        taskTypeId: task.taskType,
-        taskPeriodicityId: task.taskPeriodicity,
-    };    
-
-    // if(!task.taskId){    
-
-    //     await api.post(`/task`, { task : saveTaskTemp })
-    //     .then(res => {
-    //         console.log(res.data);
-    //     }).catch(err => {
-    //         console.log(err.response);
-    //     });     
-
-    // }else{
-
-    //     await api.put(`/task`, { task : saveTaskTemp })
-    //     .then(res => {
-    //         console.log(res.data);
-    //     }).catch(err => {
-    //         console.log(err.response);
-    //     });     
-        
-    // }
-    
-    clearTasksComponents();
-    
-  }
-
-  // const finishTask = async taskTemp => {
-
-  //   await api.put(`/finishTask`, { task : taskTemp })
-  //   .then(res => {
-  //       console.log(res.data);
-  //   }).catch(err => {
-  //       console.log(err.response);
-  //   });     
-   
-  //   loadTasks(status);
-    
-  // }
 
   const clearTasksComponents = () =>{
-      setTask(initialTask);
-      loadTasks(status);
+      setTask(useModalWithData.initialTask);
+      loadTasks(status, setStatus, setTasks);
       setIsShowModal(false);
   }
   
   const showModal = () => {setIsShowModal(true);}  
 
-  const hideModal = e => {
-    e.preventDefault(); 
-    clearTasksComponents();
-    setIsShowModal(false);
-  }
+  const hideModal = e => {clearTasksComponents();}
 
  
     return (       
@@ -254,7 +164,7 @@ export default function Card (props){
           <div className="card-footer">
             <div className="card-footer-item">
 
-              <button onClick={showModal}
+              <button onClick={() =>showModal()}
                       className="btn btn-link btn-xs">
                 <i className="fa fa-plus-circle mr-1"></i> 
                 <span>Add todo</span>

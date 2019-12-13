@@ -28,8 +28,11 @@ export default function Task (){
 
     useEffect(() => {                            
         loadProducts(currentPage);
-    }, [] ); 
+    }, [task] ); 
     
+    useEffect(() => {                            
+        loadProducts(currentPage);
+    }, [task] ); 
 
     // CRUD operations
 	const saveTask = async e => {
@@ -86,13 +89,20 @@ export default function Task (){
     }
     
     const addTask = () => {
-        setTask(initialTask);
+
+        const editTask  ={
+            taskId: 'taskTemp.id',
+            taskName: 'taskTemp.name',
+        };    
+        setTask(editTask);
+
+        console.log(task);
         showModal();
     }
 
 	const editTask = (taskTemp) => {
 
-       const editTask  ={
+       const editTask23  ={
             taskId: 'taskTemp.id',
             taskName: taskTemp.name,
             taskDescription: taskTemp.description,
@@ -104,11 +114,12 @@ export default function Task (){
             taskType: taskTemp.taskTypeId,
             taskPeriodicity: taskTemp.taskPeriodicityId,
         };    
-        console.log(editTask);
-        setTask(editTask);
-        
+        console.log(editTask23);
+        setTask(editTask23);
+
+        //setSelected(editTask23);        
         console.log(task);
-        showModal(editTask);
+        showModal(editTask23);
     }    
     
     async function  loadProducts(page) {
@@ -131,11 +142,11 @@ export default function Task (){
         loadProducts(currentPage + 1);        
     }
 
-    const showModal = (editTask) => {
+    const showModal = () => {
         console.log('teste modal');
         setTask(editTask);
         setIsShowModal(true);
-        console.log(editTask);
+       
     }
       
     const hideModal = (e) => {
@@ -144,7 +155,7 @@ export default function Task (){
     }
 
     const clearTasksComponents = () =>{
-        setTask(initialTask);
+        // setTask(initialTask);
         loadProducts(currentPage);
         setIsShowModal(false);
     }
@@ -171,6 +182,7 @@ export default function Task (){
                                     nextPage={nextPage}
                                     totalRecords={totalTaskRecords}
                                     setCurrentPage={loadProducts}
+                                    setSelected ={setTask}
                                     editTask={editTask} 
                                     deleteTask={deleteTask} 
                                     addTask={addTask} />
