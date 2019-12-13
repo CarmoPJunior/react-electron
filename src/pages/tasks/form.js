@@ -3,18 +3,14 @@ import React, { useState, useEffect } from 'react';
 export default function FormTask(props){
       
     const [ task, setTask ] = useState(props.task);
-
     
     useEffect(() => {
         setTask(props.task);
-        console.log(props.task);
-    }, []);
-    
-    
+    }, [props.task]);        
     
     const handleInputChange = event => {        
         //console.log(event.target.name);
-        console.log(event.target.value);
+        //console.log(event.target.value);
 		setTask({ ...task,  [event.target.name]: event.target.value});
     }        
 
@@ -224,13 +220,16 @@ export default function FormTask(props){
                 <hr className="my-1"></hr>
                 <div className="form-actions">
 
-                    <button onClick={() => props.saveTask(props.task)}
+                    <button onClick={async(e) => {   e.preventDefault();
+                                                await props.saveTask(task);
+                                                props.closeTask()}
+                                            }
                             className="btn btn-primary btn-sm form-control-sm">
                         <span className="oi oi-plus mr-1"></span>
                         {!task.taskId ? 'Adicionar' : 'Atualizar'}                                        
                     </button>                                    
 
-                    <button onClick={() =>props.closeTask}
+                    <button onClick={(e) =>{ e.preventDefault(); props.closeTask()}}
                             className="btn btn-danger btn-sm form-control-sm">
                         <span className="oi oi-action-undo mr-1"></span>
                         Voltar

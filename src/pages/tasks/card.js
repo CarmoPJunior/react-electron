@@ -6,16 +6,14 @@ import {editTask, finishTask, useModalWithData, loadTasks, saveTask } from './co
 
 export default function Card (props){
   
-  const {task, setTask, tasks, setTasks, status, setStatus, isShowModal, setIsShowModal} = useModalWithData();
+  const {task, setTask, tasks, setTasks, status, setStatus, isShowModal, setIsShowModal, initialTask} = useModalWithData();
 
   useEffect(() => {                            
-      loadTasks(status, setStatus, setTasks);
-      console.log(status);
-      console.log(task);
-  }, [] );
+      loadTasks(status, setStatus, setTasks);      
+  }, [status] );
 
   const clearTasksComponents = () =>{
-      setTask(useModalWithData.initialTask);
+      setTask(initialTask);
       loadTasks(status, setStatus, setTasks);
       setIsShowModal(false);
   }
@@ -24,7 +22,6 @@ export default function Card (props){
 
   const hideModal = e => {clearTasksComponents();}
 
- 
     return (       
         
         <div className="card card-fluid">
@@ -73,7 +70,7 @@ export default function Card (props){
                 <div className=" float-left"> 
                   <ul className="list-inline small float-left">
                     <li className="list-inline-item">                      
-                      <button onClick={() => {loadTasks()}}
+                      <button onClick={() => {setStatus(null)}}
                               className="btn btn-link btn-xs" 
                               style={{color:"white"}}>
                         <i className="fa fa-fw fa-circle text-cyan"></i> 
@@ -81,7 +78,7 @@ export default function Card (props){
                       </button> 
                     </li>                  
                     <li className="list-inline-item">
-                      <button onClick={() => {loadTasks([1])}}
+                      <button onClick={() => {setStatus([1])}}
                               className="btn btn-link btn-xs" 
                               style={{color:"white"}}>
                         <i className="fa fa-fw fa-circle text-yellow"></i> 
@@ -89,7 +86,7 @@ export default function Card (props){
                       </button> 
                     </li>
                     <li className="list-inline-item">
-                      <button onClick={() => {loadTasks([5])}}
+                      <button onClick={() => {setStatus([5])}}
                               className="btn btn-link btn-xs" 
                               style={{color:"white"}}>
                         <i className="fa fa-fw fa-circle text-teal"></i> 
@@ -97,7 +94,7 @@ export default function Card (props){
                       </button> 
                     </li>
                     <li className="list-inline-item">
-                      <button onClick={() => {loadTasks([7])}}
+                      <button onClick={() => {setStatus([7])}}
                               className="list-inline-item btn btn-link btn-xs" 
                               style={{color:"white"}}> 
                         <i className="fa fa-fw fa-circle text-red"></i> 
@@ -144,7 +141,7 @@ export default function Card (props){
                 </div>
                 <div className="list-group-item-figure no-border-top">
                  
-                  <button onClick={() =>finishTask(task, loadTasks, status )}  
+                  <button onClick={() =>finishTask(task, clearTasksComponents)}  
                           className="btn btn-sm btn-icon btn-light" data-todoid="1">
                     <i className="fa fa-check"></i>
                   </button> 
@@ -174,15 +171,15 @@ export default function Card (props){
           </div>
 
 
-          <Modal  show={isShowModal} 
-                    handleClose={hideModal} 
-                    modalTitle={'Título do Modal'}
-                    >
+          { isShowModal && 
+
+            <Modal show={isShowModal}
+                  handleClose={hideModal} 
+                  modalTitle={'Título do Modal'}>
                <FormTask   task={task} 
                             saveTask={saveTask} 
-                            closeTask={hideModal}
-                             />
-          </Modal>
+                            closeTask={hideModal} />
+            </Modal>}
         </div>
          
         

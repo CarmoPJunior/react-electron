@@ -1,13 +1,9 @@
 import React from 'react';
 import {getFullDateHour} from '../../utils/dateUtil';
 
-
 export default function TableTasks (props){
-//const TableTasks = props => 
 
     const lastPage = Math.ceil(props.totalRecords / props.pageSize);
-    const { data, setSelected, setModalState } = props;
-
 
     return (
 

@@ -28,12 +28,9 @@ export default function Task (){
 
     useEffect(() => {                            
         loadProducts(currentPage);
-    }, [task] ); 
+    }, [] ); 
     
-    useEffect(() => {                            
-        loadProducts(currentPage);
-    }, [task] ); 
-
+    
     // CRUD operations
 	const saveTask = async e => {
 
@@ -181,8 +178,7 @@ export default function Task (){
                                     prevPage={prevPage}
                                     nextPage={nextPage}
                                     totalRecords={totalTaskRecords}
-                                    setCurrentPage={loadProducts}
-                                    setSelected ={setTask}
+                                    setCurrentPage={loadProducts}                                    
                                     editTask={editTask} 
                                     deleteTask={deleteTask} 
                                     addTask={addTask} />
