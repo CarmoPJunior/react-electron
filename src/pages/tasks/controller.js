@@ -13,8 +13,8 @@ export const useModalWithData = () => {
         taskDuration: '',
         taskCompletionDate: '',       
         taskStatus: 1,
-        taskType: '',
-        taskPeriodicity: '',
+        taskType: 1,
+        taskPeriodicity: 1,
     };
     const [ task, setTask ] = useState(initialTask);
     const [ status, setStatus ] = useState([1]); 
