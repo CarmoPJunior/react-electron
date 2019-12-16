@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
-import Card from '../tasks/card';
+import TaskCard from '../tasks/card';
+import UpperLowerCaseCard from '../utilits/upperLowerCase/card';
+
 
 // import { Link } from 'react-router-dom';
 
@@ -70,12 +72,12 @@ export default class Main extends Component{
                     <div className="row">
 
                         <div className="col-12 col-lg-12 col-xl-4">
-
-                            <Card  tasks={null}  cardTitle={"Tarefas"} />
-
+                            <TaskCard  cardTitle={"Tarefas"} />
                         </div>
 
-                        <div className="col-12 col-lg-12 col-xl-4"></div>
+                        <div className="col-12 col-lg-12 col-xl-4">
+                            <UpperLowerCaseCard cardTitle="Upper Lower Case" />
+                        </div>
 
                         <div className="col-12 col-lg-12 col-xl-4"></div>
 

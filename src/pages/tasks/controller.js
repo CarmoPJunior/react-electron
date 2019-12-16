@@ -1,6 +1,7 @@
 
 import api from '../../services/api';
 import {useState} from 'react';
+import {getFullDateHour} from '../../utils/dateUtil';
 
 export const useModalWithData = () => {
 
@@ -9,7 +10,7 @@ export const useModalWithData = () => {
         taskName: '',
         taskDescription: '',
         taskObservation: '',
-        taskDateHour: '',
+        taskDateHour: getFullDateHour(new Date()),
         taskDuration: '',
         taskCompletionDate: '',       
         taskStatus: 1,
@@ -60,7 +61,7 @@ export const editTask  = (taskTemp, showModal, setTask) =>{
          taskName: taskTemp.name,
          taskDescription: taskTemp.description,
          taskObservation: taskTemp.observation,
-         taskDateHour: taskTemp.dateHour,
+         taskDateHour: getFullDateHour(new Date(taskTemp.dateHour)),
          taskDuration: taskTemp.duration,
          taskCompletionDate: taskTemp.completionDate,            
          taskStatus: taskTemp.taskStatusId,
@@ -68,7 +69,7 @@ export const editTask  = (taskTemp, showModal, setTask) =>{
          taskPeriodicity: taskTemp.taskPeriodicityId,
      };
     
-    console.log(editTask);
+    // console.log(editTask);
     setTask(editTask);
     showModal();
  }    
@@ -88,7 +89,7 @@ export const editTask  = (taskTemp, showModal, setTask) =>{
         taskPeriodicityId: task.taskPeriodicity,
     };    
 
-    console.log(task);
+    // console.log(task);
 
     if(!task.taskId){    
 
@@ -112,3 +113,14 @@ export const editTask  = (taskTemp, showModal, setTask) =>{
     
   }
 
+  export const deleteTask = async (id, clearTasksComponents)  => {   
+        
+    await api.delete(`/task?id=`+id)
+    .then(res => {
+        console.log(res.data);
+    }).catch(err => {
+        console.log(err.response);
+    }).finally(await clearTasksComponents());    
+
+   
+}

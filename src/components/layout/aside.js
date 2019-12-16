@@ -55,7 +55,7 @@ const Aside = () =>(
                 <ul className="menu">
                     
                     <li className="menu-item has-active">
-                        <a href="dashboard.html" className="menu-link">
+                        <a href="/" className="menu-link">
                             <span className="menu-icon fas fa-home"></span> 
                             <span className="menu-text">Dashboard</span>
                         </a>                        
